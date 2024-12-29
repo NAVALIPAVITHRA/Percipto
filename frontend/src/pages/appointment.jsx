@@ -1,11 +1,31 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react';
+import { AppContext } from '../content/AppContext';
+import { useParams } from 'react-router-dom';
 
-const appointment = () => {
-  return (
-    <div>
+const Appointment = () => {
+    const { docId } = useParams();
+    const { doctor } = useContext(AppContext);
+    const [docInfo, setDocInfo] = useState(null);
+
+    const fetchDocInfo = () => {
+        const docInfo = doctor.find(doc => doc._id === docId);
+        setDocInfo(docInfo);
+        console.log(docInfo);
         
-    </div>
-  )
-}
+    };
 
-export default appointment
+    useEffect(() => {
+        fetchDocInfo();
+    }, [doctor, docId]);
+
+    return docInfo && (
+        <div>
+            <div>
+                <img src={docInfo.image} alt={docInfo.name} />
+            </div>
+        </div>
+    );
+};
+
+export default Appointment;
+
