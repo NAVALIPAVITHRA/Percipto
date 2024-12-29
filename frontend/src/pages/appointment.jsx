@@ -6,7 +6,7 @@ import { assets_frontend, doctors } from '../assets/assets_frontend/assets_front
 const Appointment = () => {
     const { docId } = useParams();
     const { doctor, currencySymbol } = useContext(AppContext);
-    const daysofweek = ['SUN', 'MON', 'TUES', 'WED', 'THURS', 'FRI', 'SAT']
+    const daysofweek = ['SUN', 'MON', 'TUES', 'WED', 'THURS', 'FRI', 'SAT'];
     const [docInfo, setDocInfo] = useState(null);
     const [docSlots, setDocSlots] = useState([]);
     const [slotIndex, setSlotIndex] = useState(0);
@@ -29,25 +29,22 @@ const Appointment = () => {
             endTime.setDate(today.getDate() + i);
             endTime.setHours(21, 0, 0, 0);
             if (today.getDate() === currentDate.getDate()) {
-                currentDate.setHours(currentDate.getHours() > 10 ? currentDate.getHours() + 1 : 10)
-                currentDate.setMinutes(currentDate.getMinutes() > 30 ? 30 : 0)
+                currentDate.setHours(currentDate.getHours() > 10 ? currentDate.getHours() + 1 : 10);
+                currentDate.setMinutes(currentDate.getMinutes() > 30 ? 30 : 0);
+            } else {
+                currentDate.setHours(10);
+                currentDate.setMinutes(0);
             }
-            else {
-                currentDate.setHours(10)
-                currentDate.setMinutes(10)
-            }
-            let timeSlots = []
+            let timeSlots = [];
             while (currentDate < endTime) {
-                let formattedTime = currentDate.toLocaleTimeString({}, { hour: '2-digit', minute: '2-digit' })
+                let formattedTime = currentDate.toLocaleTimeString({}, { hour: '2-digit', minute: '2-digit' });
                 timeSlots.push({
                     datetime: new Date(currentDate),
                     time: formattedTime
-                })
-                currentDate.setMinutes(currentDate.getMinutes() + 30)
-
+                });
+                currentDate.setMinutes(currentDate.getMinutes() + 30);
             }
-            setDocSlots(prev => ([...prev, timeSlots]))
-            // Add slots to the docSlots state
+            setDocSlots(prev => ([...prev, timeSlots]));
         }
     };
 
@@ -60,10 +57,10 @@ const Appointment = () => {
             getAvailableSlots();
         }
     }, [docInfo]);
-    useEffect(() => {
-        console.log(docSlots)
 
-    }, [docSlots])
+    useEffect(() => {
+        console.log(docSlots);
+    }, [docSlots]);
 
     return docInfo && (
         <div className='flex flex-col gap-4'>
@@ -85,16 +82,22 @@ const Appointment = () => {
                 </div>
             </div>
 
-            <div className='sm:ml-772 sm:pl-4 mt-4 font-medium text-gray-700'>
+            <div className='sm:ml-72 sm:pl-4 mt-4 font-medium text-gray-700'>
                 <p>Booking slots</p>
-                <div>
-                    {docSlots.length && docSlots.map((item, index) => (
-                        <div key={index}>
+                <div className='flex gap-3 items-center w-full overflow-x-scroll mt-4'>  
+                    {docSlots.length > 0 && docSlots.map((item, index) => (
+                        <div onClick={()=>setSlotIndex(index)} className={`text-center py-6 min-w-16 rounded-full cursor-pointer ${slotIndex === index ? 'bg-primary text-white' : 'border border-gray-200'}`} key={index}>
                             <p>{item[0] && daysofweek[item[0].datetime.getDay()]}</p>
-                            {/* <p>{item[0] && item[0].datatime.getDate()}</p> */}
+                            <p>{item[0] && item[0].datetime.getDate()}</p>
                         </div>
-                    )
-                    )}
+                    ))}
+                </div>
+                <div>
+                    {docSlots.length && docSlots[slotIndex].map((item,index)=>(
+                        <p key={index}>
+                            {item.time.toLowerCase()}
+                        </p>
+                    ))}
                 </div>
             </div>
         </div>
@@ -102,5 +105,6 @@ const Appointment = () => {
 };
 
 export default Appointment;
+
 
 
