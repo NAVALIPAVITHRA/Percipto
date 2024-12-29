@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../content/AppContext';
 import { useParams } from 'react-router-dom';
+import { doctors } from '../assets/assets_frontend/assets_frontend';
 
 const Appointment = () => {
     const { docId } = useParams();
@@ -8,10 +9,9 @@ const Appointment = () => {
     const [docInfo, setDocInfo] = useState(null);
 
     const fetchDocInfo = () => {
-        const docInfo = doctor.find(doc => doc._id === docId);
+        const docInfo = doctors.find(doc => doc._id === docId);
         setDocInfo(docInfo);
         console.log(docInfo);
-        
     };
 
     useEffect(() => {
