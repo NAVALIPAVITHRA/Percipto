@@ -13,7 +13,7 @@ const footer = () => {
             </div>
              {/*center */}
             <div>
-             <p className='text-xl font-medium mb-5'> Company</p>
+             <p className='text-sm font-medium mb-5'> COMPANY</p>
              <ul className='flex flex-col gap-2 text-gray-600'>
                 <li>Home</li>
                 <li>About us</li>
@@ -24,7 +24,7 @@ const footer = () => {
             </div>
               {/*right */}
             <div>
-                <p className='text-xl font-medium mb-5'>GET IN TOUCH</p>
+                <p className='text-sm font-medium mb-5'>GET IN TOUCH</p>
                 <ul className='flex flex-col gap-2 text-gray-600'>
                     <li>+1-212-456-7890</li>
                     <li>doctorscenter@gmail.com</li>
