@@ -118,6 +118,7 @@ const Appointment = () => {
     const [docInfo, setDocInfo] = useState(null);
     const [docSlots, setDocSlots] = useState([]);
     const [slotIndex, setSlotIndex] = useState(0);
+    const [slotTime, setSlotTime] = useState(''); // Ensure slotTime is defined
 
     const fetchDocInfo = () => {
         const docInfo = doctors.find(doc => doc._id === docId);
@@ -186,7 +187,7 @@ const Appointment = () => {
                 <p>Booking slots</p>
                 <div className='flex gap-3 items-center w-full overflow-x-scroll mt-4'>
                     {docSlots.length > 0 && docSlots.map((item, index) => (
-                        <div onClick={() => setSlotIndex(index)} className={`text-center py-6 min-w-16 rounded-full cursor-pointer ${slotIndex === index ? 'bg-primary text-white' : 'border border-gray-200'}`} key={index}>
+                        <div onClick={() => setSlotIndex(index)} className={`text-center py-6 min-w-[64px] rounded-full cursor-pointer ${slotIndex === index ? 'bg-primary text-white' : 'border border-gray-200'}`} key={index}>
                             <p>{item[0] && daysofweek[item[0].datetime.getDay()]}</p>
                             <p>{item[0] && item[0].datetime.getDate()}</p>
                         </div>
@@ -194,7 +195,7 @@ const Appointment = () => {
                 </div>
                 <div className='flex items-center gap-3 w-full overflow-x-scroll mt-4'>
                     {docSlots.length && docSlots[slotIndex].map((item, index) => (
-                        <p  className={`text-sm font-light flex-shrink-0 px-5 py-2 rounded-full cursor-pointer`}key={index}>
+                        <p  className={`text-sm font-light flex-shrink-0 px-5 py-2 rounded-full cursor-pointer ${item.time === slotTime ? 'bg-primary text-white' : 'text-gray-400 border border-gray-300'}`} key={index} onClick={() => setSlotTime(item.time)}>
                             {item.time.toLowerCase()}
                         </p>
                     ))}
